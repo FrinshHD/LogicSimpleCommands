@@ -20,12 +20,15 @@ public final class Main extends JavaPlugin {
         return instance;
     }
 
+    public static LinkInventory linkInventory;
+
     @Override
     public void onEnable() {
         instance = this;
 
         this.saveDefaultConfig();
         loadConfig();
+        linkInventory = new LinkInventory();
     }
 
     public void loadConfig() {

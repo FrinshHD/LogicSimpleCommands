@@ -3,6 +3,7 @@ package de.frinshhd.logicsimplecommands;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ public class SimpleCommand extends Command {
 
     protected boolean correct = true;
     private String text;
+    private CommandTypes type;
 
     protected SimpleCommand(Map<?, ?> map) {
         super((String) map.get("command"));
@@ -33,6 +35,12 @@ public class SimpleCommand extends Command {
             setAliases((ArrayList<String>) map.get("aliases"));
         }
 
+        if (map.containsKey("type")) {
+            type = CommandTypes.valueOf((String) map.get("type"));
+        } else {
+            type = CommandTypes.SIMPLE;
+        }
+
         if (map.containsKey("text")) {
             this.text = (String) map.get("text");
         } else {
@@ -41,16 +49,33 @@ public class SimpleCommand extends Command {
     }
 
     @Override
-    public boolean execute(@NotNull CommandSender commandSender, @NotNull String s, @NotNull String[] strings) {
-        if (getPermission() != null && !commandSender.hasPermission(getPermission())) {
+    public boolean execute(@NotNull CommandSender sender, @NotNull String s, @NotNull String[] strings) {
+        if (getPermission() != null && !sender.hasPermission(getPermission())) {
             return false;
         }
 
-        commandSender.sendMessage(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNullElse(text, "No text defined.")));
-        return true;
+        switch (type) {
+            case SIMPLE:
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNullElse(text, "No text defined.")));
+                return true;
+            case LINK_INVENTORY:
+                if (!(sender instanceof Player player)) {
+                    return false;
+                }
+
+                Main.linkInventory.openInventory(player);
+                return true;
+            default:
+                return false;
+        }
     }
 
     public boolean isCorrect() {
         return correct;
     }
+}
+
+enum CommandTypes {
+    SIMPLE,
+    LINK_INVENTORY
 }
