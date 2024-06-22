@@ -1,0 +1,5 @@
+name: LogicSimpleCommands
+version: '${project.version}'
+main: de.frinshhd.logicsimplecommands.Main
+api-version: '1.20'
+author: "FrinshHD"

@@ -1,0 +1,7 @@
+commands:
+  - command: "discord"
+    description: "Join our Discord server"
+    usage: "/discord"
+    aliases: ["dc"]
+    permission: "lsc.discord"
+    text: "Join our Discord server at discord.gg/example"
