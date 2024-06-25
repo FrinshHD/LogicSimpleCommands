@@ -6,7 +6,7 @@
 
   <groupId>de.frinshhd</groupId>
   <artifactId>LogicSimpleCommands</artifactId>
-  <version>0.0.2</version>
+  <version>0.0.4</version>
   <packaging>jar</packaging>
 
   <name>LogicSimpleCommands</name>

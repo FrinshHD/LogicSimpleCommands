@@ -5,6 +5,7 @@ import com.destroystokyo.paper.profile.ProfileProperty;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,12 +13,14 @@ import org.bukkit.event.entity.ItemMergeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class LinkInventory implements Listener {
 
@@ -26,11 +29,22 @@ public class LinkInventory implements Listener {
     public LinkInventory() {
         Main.getInstance().getServer().getPluginManager().registerEvents(this, Main.getInstance());
 
-        inv = Bukkit.createInventory(null, 9 * 3, "§bʟɪɴᴋs");
+        String title = Objects.requireNonNull(Main.getInstance().getConfig().getConfigurationSection("linkInventory")).getString("title");
+
+        if (title == null) {
+            title = "§bʟɪɴᴋs";
+        }
+
+        inv = Bukkit.createInventory(null, 9 * 3, ChatColor.translateAlternateColorCodes('&', title));
         putItems();
     }
 
     public void putItems() {
+
+        for (int i = 0; i < inv.getSize(); i++) {
+            inv.setItem(i, fillerItem());
+        }
+
         List<Map<?, ?>> commands = Main.getInstance().getConfig().getMapList("commands");
 
         commands.forEach(command -> {
@@ -38,8 +52,6 @@ public class LinkInventory implements Listener {
             if (!command.containsKey("linkInventory") || !((Boolean) command.get("linkInventory"))) {
                 return;
             }
-
-
 
             String materialRaw;
 
@@ -122,6 +134,42 @@ public class LinkInventory implements Listener {
         if (event.getInventory().equals(inv)) {
             event.setCancelled(true);
         }
+    }
+
+    public ItemStack fillerItem() {
+        String materialRaw = Main.getInstance().getConfig().getConfigurationSection("linkInventory").getString("fillerMaterial");
+        Material material;
+
+        if (materialRaw == null) {
+            material = Material.GRAY_STAINED_GLASS_PANE;
+        } else {
+            if (Material.getMaterial(materialRaw.toUpperCase()) == null) {
+                material = Material.GRAY_STAINED_GLASS_PANE;
+            } else {
+                material = Material.getMaterial(materialRaw.toUpperCase());
+            }
+        }
+
+        assert material != null;
+
+        ItemStack item = new ItemStack(material);
+        ItemMeta itemMeta = item.getItemMeta();
+
+        itemMeta.setDisplayName(" ");
+
+        //itemMeta.addItemFlags(ItemFlag.HIDE_ITEM_SPECIFICS);
+        itemMeta.addItemFlags(ItemFlag.HIDE_ARMOR_TRIM);
+        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        itemMeta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+        itemMeta.addItemFlags(ItemFlag.HIDE_DESTROYS);
+        itemMeta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
+        itemMeta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+        itemMeta.addItemFlags(ItemFlag.HIDE_DYE);
+        itemMeta.addItemFlags(ItemFlag.HIDE_ARMOR_TRIM);
+
+        item.setItemMeta(itemMeta);
+
+        return item;
     }
 
 }

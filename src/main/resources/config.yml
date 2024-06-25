@@ -17,3 +17,7 @@ commands:
     aliases: ["l"]
     permission: "lsc.links"
     type: "LINK_INVENTORY"
+
+linkInventory:
+  title: "&bʟɪɴᴋs"
+  fillerMaterial: "BLACK_STAINED_GLASS_PANE"

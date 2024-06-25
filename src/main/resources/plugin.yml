@@ -3,3 +3,15 @@ version: '${project.version}'
 main: de.frinshhd.logicsimplecommands.Main
 api-version: '1.20'
 author: "FrinshHD"
+
+commands:
+  lsc:
+    aliases:
+      - logicsimplecommands
+    description: "Main command for LogicSimpleCommands"
+    usage: "/lsc"
+
+permissions:
+  lsc.reload:
+    description: "Reload the plugin"
+    default: op
