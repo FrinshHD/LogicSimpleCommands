@@ -13,8 +13,8 @@ import java.util.Objects;
 public class SimpleCommand extends Command {
 
     protected boolean correct = true;
-    private String text;
-    private CommandTypes type;
+    private final String text;
+    private final String inventory;
 
     protected SimpleCommand(Map<?, ?> map) {
         super((String) map.get("command"));
@@ -35,16 +35,16 @@ public class SimpleCommand extends Command {
             setAliases((ArrayList<String>) map.get("aliases"));
         }
 
-        if (map.containsKey("type")) {
-            type = CommandTypes.valueOf((String) map.get("type"));
-        } else {
-            type = CommandTypes.SIMPLE;
-        }
-
         if (map.containsKey("text")) {
             this.text = (String) map.get("text");
         } else {
             text = null;
+        }
+
+        if (map.containsKey("inventory")) {
+            this.inventory = (String) map.get("inventory");
+        } else {
+            inventory = null;
         }
     }
 
@@ -54,28 +54,32 @@ public class SimpleCommand extends Command {
             return false;
         }
 
-        switch (type) {
-            case SIMPLE:
-                sender.sendMessage(MessageFormat.build(Objects.requireNonNullElse(text, "No text defined.")));
+        if (inventory != null) {
+            if (!(sender instanceof Player)) {
+                sender.sendMessage(ChatColor.RED + "You must be a player to execute this command.");
                 return true;
-            case LINK_INVENTORY:
-                if (!(sender instanceof Player player)) {
-                    return false;
-                }
+            }
 
-                Main.linkInventory.openInventory(player);
-                return true;
-            default:
-                return false;
+            Player player = (Player) sender;
+
+            if (Main.getInventory(inventory) == null) {
+                player.sendMessage(ChatColor.RED + "Inventory not found.");
+            }
+
+            Main.getInventory(inventory).openInventory(player);
         }
+
+        if (text == null && inventory == null) {
+            return false;
+        } else if (text == null) {
+            return true;
+        }
+
+        sender.sendMessage(MessageFormat.build(text));
+        return true;
     }
 
     public boolean isCorrect() {
         return correct;
     }
-}
-
-enum CommandTypes {
-    SIMPLE,
-    LINK_INVENTORY
 }

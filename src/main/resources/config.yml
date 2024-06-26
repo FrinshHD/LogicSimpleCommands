@@ -5,19 +5,27 @@ commands:
     aliases: ["dc"]
     permission: "lsc.discord"
     text: "Join our Discord server at discord.gg/example"
-    type: "SIMPLE"
-    linkInventory: true
-    name: "&9Discord"
-    material: "PLAYER_HEAD"
-    headValue: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjcyMjA5OGFlNzljN2FiZjAwMmZlOTY4NGM3NzNlYTcxZGI4OTE5YmIyZWYyMDUzZWEwYzA2ODRjNWExY2U0ZiJ9fX0="
-    slot: 11
   - command: "links"
     description: "View all our links"
     usage: "/links"
     aliases: ["l"]
     permission: "lsc.links"
-    type: "LINK_INVENTORY"
+    inventory: "links"
 
-linkInventory:
-  title: "&bʟɪɴᴋs"
-  fillerMaterial: "BLACK_STAINED_GLASS_PANE"
+inventories:
+  - id: "links"
+    title: "&bʟɪɴᴋs"
+    rows: 3
+    fillerMaterial: "BLACK_STAINED_GLASS_PANE"
+    items:
+      - name: "&9Discord"
+        material: "PLAYER_HEAD"
+        headValue: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjcyMjA5OGFlNzljN2FiZjAwMmZlOTY4NGM3NzNlYTcxZGI4OTE5YmIyZWYyMDUzZWEwYzA2ODRjNWExY2U0ZiJ9fX0="
+        slot: 11
+        lore:
+          - "&7Click to join our Discord server"
+          - "jebb1"
+          - "jebb2"
+        actions:
+          - command: "discord"
+          - message: "Join our Discord server at discord.gg/example"

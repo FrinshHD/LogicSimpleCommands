@@ -8,6 +8,10 @@ import java.util.regex.Pattern;
 public class MessageFormat {
 
     public static String build(String message) {
+        if (message == null || message.isEmpty()) {
+            return message;
+        }
+
         Pattern pattern = Pattern.compile("#[a-fA-F0-9]{6}");
         Matcher matcher = pattern.matcher(message);
         while (matcher.find()) {
