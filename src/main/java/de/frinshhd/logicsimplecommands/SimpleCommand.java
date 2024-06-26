@@ -56,7 +56,7 @@ public class SimpleCommand extends Command {
 
         switch (type) {
             case SIMPLE:
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNullElse(text, "No text defined.")));
+                sender.sendMessage(MessageFormat.build(Objects.requireNonNullElse(text, "No text defined.")));
                 return true;
             case LINK_INVENTORY:
                 if (!(sender instanceof Player player)) {

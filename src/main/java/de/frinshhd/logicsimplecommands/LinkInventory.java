@@ -35,7 +35,7 @@ public class LinkInventory implements Listener {
             title = "§bʟɪɴᴋs";
         }
 
-        inv = Bukkit.createInventory(null, 9 * 3, ChatColor.translateAlternateColorCodes('&', title));
+        inv = Bukkit.createInventory(null, 9 * 3, MessageFormat.build(title));
         putItems();
     }
 
@@ -71,7 +71,7 @@ public class LinkInventory implements Listener {
 
             if (command.containsKey("name")) {
                 ItemMeta itemMeta = item.getItemMeta();
-                itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', (String) command.get("name")));
+                itemMeta.setDisplayName(MessageFormat.build((String) command.get("name")));
                 item.setItemMeta(itemMeta);
             }
 
