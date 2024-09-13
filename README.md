@@ -34,3 +34,4 @@ commands:
     usage: "/links"
     permission: "lsc.links"
     inventory: "links"
+```
