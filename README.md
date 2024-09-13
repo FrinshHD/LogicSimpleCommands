@@ -10,6 +10,9 @@ LogicSimpleCommands is a versatile and easy-to-use plugin for managing custom co
 - **Aliases**: Define aliases for commands to provide multiple ways to execute the same command.
 - **Reloadable Configuration**: Easily reload the configuration without restarting the server using the `/lsc reload` command.
 
+## Screenshots
+- Example configured inventory / menu ![](https://cdn.codearray.dev/imgs/LogicSimpleCommands-gui-1.png)  
+
 ## Configuration
 
 ### Commands
