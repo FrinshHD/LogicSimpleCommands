@@ -2,6 +2,10 @@
 
 LogicSimpleCommands is a versatile and easy-to-use plugin for managing custom commands and inventories in your Minecraft server. This plugin allows server administrators to define commands and inventories directly from a configuration file, making it simple to customize and extend server functionality without needing to write additional code.
 
+
+Get the latest dev version here: https://jenkins.codearray.dev/job/LogicSimpleCommands/  
+**Support**: https://logic.codearray.dev/discord  
+
 ## Features
 
 - **Dynamic Command Registration**: Define commands in `config.yml` and have them automatically registered when the server starts.
@@ -38,3 +42,4 @@ commands:
     permission: "lsc.links"
     inventory: "links"
 ```
+
