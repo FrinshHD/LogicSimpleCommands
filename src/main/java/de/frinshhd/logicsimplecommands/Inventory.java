@@ -4,6 +4,7 @@ import com.destroystokyo.paper.profile.PlayerProfile;
 import com.destroystokyo.paper.profile.ProfileProperty;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -94,13 +95,16 @@ public class Inventory implements Listener {
             if (invItem.containsKey("headValue")) {
                 if (item.getType().equals(Material.PLAYER_HEAD)) {
                     SkullMeta skullMeta = (SkullMeta) item.getItemMeta();
-                    skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer("bbd0af50-1c26-4e4e-9171-615c844d4a87"));
-                    PlayerProfile playerProfile = skullMeta.getPlayerProfile();
-                    assert playerProfile != null;
-                    playerProfile.setProperty(new ProfileProperty("textures", (String) invItem.get("headValue")));
-                    skullMeta.setPlayerProfile(playerProfile);
+                    if (skullMeta != null) {
+                        OfflinePlayer player = Bukkit.getOfflinePlayer("bbd0af50-1c26-4e4e-9171-615c844d4a87");
+                        skullMeta.setOwningPlayer(player);
 
-                    item.setItemMeta(skullMeta);
+                        PlayerProfile playerProfile = Bukkit.createProfile(player.getUniqueId());
+                        playerProfile.setProperty(new ProfileProperty("textures", (String) invItem.get("headValue")));
+                        skullMeta.setPlayerProfile(playerProfile);
+
+                        item.setItemMeta(skullMeta);
+                    }
                 }
             }
 
